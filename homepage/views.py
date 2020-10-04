@@ -9,9 +9,6 @@ from rest_framework.decorators import action
 
 
 class PostViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows posts to be viewed or edited.
-    """
     queryset = Post.objects.all().order_by('-submission_date')
     serializer_class = PostSerializer
 
