@@ -17,15 +17,13 @@ class PostViewSet(viewsets.ModelViewSet):
 
     @action(detail=False)
     def boasts(self, request):
-        boasts = Post.objects.filter(
-            is_boast=True).order_by('-submission_date')
+        boasts = Post.objects.filter(roast_or_boast=True)
         serializer = self.get_serializer(boasts, many=True)
         return Response(serializer.data)
 
     @action(detail=False)
     def roasts(self, request):
-        roasts = Post.objects.filter(
-            is_boast=False).order_by('-submission_date')
+        roasts = Post.objects.filter(roast_or_boast=False)
         serializer = self.get_serializer(roasts, many=True)
         return Response(serializer.data)
 
@@ -44,3 +42,9 @@ class PostViewSet(viewsets.ModelViewSet):
         post.score = post.up_votes - post.down_votes
         post.save()
         return Response({'status': 'post downvoted'})
+    
+    @action(detail=False)
+    def sort_posts(self, request):
+        sorted_posts = top = Post.objects.all().order_by('-score')
+        serializer = self.get_serializer(sorted_posts, many=True)
+        return Response(serializer.data)
