@@ -9,6 +9,7 @@ class Post(models.Model):
     submission_date = models.DateTimeField(default=timezone.now)
     choices = ((True, 'Boast'), (False, 'Roast'))
     roast_or_boast = models.BooleanField(choices=choices, default=True)
+    score = models.IntegerField(default=0)
         
     @property
     def votes(self):
